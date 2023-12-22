@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -9,14 +11,17 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-mongoose.connect("mongodb://127.0.0.1:27017/GuviTask");
+mongoose.connect(process.env.MONGODB_URI);
+const port = process.env.PORT || 3001;
 
+// Register
 app.post('/register', (req, res)=>{
     UsersModel.create(req.body)
     .then(users => res.json(users))
     .catch(err => res.json(err))
 })
 
+// Login
 app.post('/login', (req, res) => {
     const {email, password} = req.body;
     UsersModel.findOne({email: email})
@@ -34,6 +39,7 @@ app.post('/login', (req, res) => {
     })
 })
 
+// Get User details
 app.get('/getUser/:id',(req, res)=>{
     const id = req.params.id;
     UsersModel.findById({_id:id})
@@ -43,6 +49,7 @@ app.get('/getUser/:id',(req, res)=>{
     .catch(err => res.json(err))
 })
 
+// Update User details
 app.put('/updateUser/:id', (req, res) =>{
     const id = req.params.id;
     UsersModel.findByIdAndUpdate({_id:id}, {
@@ -58,6 +65,6 @@ app.put('/updateUser/:id', (req, res) =>{
 })
 
 
-app.listen(3001,()=>{
+app.listen(port,()=>{
     console.log("server is running");
 })
