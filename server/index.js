@@ -9,14 +9,18 @@ const ObjectId = require('mongodb');
 const app = express()
 
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 app.use(cors({
     origin: ["https://mern-guvi-task-client.vercel.app"],
     methods: ["POST", "GET", "PUT"],
     credentials: true
 }));
 
-mongoose.connect(process.env.MONGODB_URI);
-const port = process.env.PORT || 3001;
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected successfully'))
+  .catch(error => console.error('MongoDB connection error:', error));
+
+
 
 // Register
 app.post('/register', (req, res)=>{
@@ -68,7 +72,7 @@ app.put('/updateUser/:id', (req, res) =>{
     .catch(err => res.json(err))
 })
 
-
+const port = process.env.PORT || 3001;
 app.listen(port,()=>{
     console.log("server is running");
 })
