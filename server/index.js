@@ -7,11 +7,12 @@ const UsersModel = require('./models/Users')
 const ObjectId = require('mongodb');
 
 const app = express()
+const base_url = process.env.BASE_URL
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-    origin: ["https://mern-guvi-task-client.vercel.app"],
+    origin: [`${base_url}`],
     methods: ["POST", "GET", "PUT"],
     credentials: true
 }));
