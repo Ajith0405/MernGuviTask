@@ -26,7 +26,7 @@ const Profile = () => {
 
   useEffect(() => {
     console.log(id);
-    axios.get('http://localhost:3001/getUser/' + id, {})
+    axios.get('https://mern-guvi-task-api.vercel.app/getUser/' + id, {})
       .then(res => {
         console.log(res);
         setName(res.data.name);
@@ -50,7 +50,7 @@ const Profile = () => {
   }
   const handleSave = (e) => {
     e.preventDefault();
-    axios.put('http://localhost:3001/updateUser/'+id,{age,dob,gender,mobile,highEdu})
+    axios.put('https://mern-guvi-task-api.vercel.app/updateUser/'+id,{age,dob,gender,mobile,highEdu})
     .then(res=>{
         console.log(res)
         alert("Updated Successfully..")
