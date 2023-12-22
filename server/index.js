@@ -9,7 +9,11 @@ const ObjectId = require('mongodb');
 const app = express()
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: ["https://mern-guvi-task-client.vercel.app"],
+    methods: ["POST", "GET", "PUT"],
+    credentials: true
+}));
 
 mongoose.connect(process.env.MONGODB_URI);
 const port = process.env.PORT || 3001;
